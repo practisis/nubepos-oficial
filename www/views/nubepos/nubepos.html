@@ -119,16 +119,19 @@
 				</div>
 			</div>
 	</div>
-	<div class='scan' id='scan' onclick='dale()'>
+	<!--<div class='scan' id='scan' onclick='dale()'>
 		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
 		<div class='boton' id='btn_scan'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
-	<!--<img src='images/btnscan.png' style='cursor:pointer; width:100%;'/>-->
+	<img src='images/btnscan.png' style='cursor:pointer; width:100%;'/>
 		</div>
-	</div>
-	<div class="scan" id="scancodebar" onclick="dale()">
+	</div>-->
+	<!--<div class="scan" id="scancodebar" onclick="dale()">
 		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
 			<div class='boton' id='barcodescanner'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
 		</div>
+	</div>-->
+	 <div class="scan">
+		<input type="button" value="scan" onclick="dale();" ontouch="dale();" style="margin-top: 230px; width: 100px; height: 30px; font-size: 1em"/>
 	</div>
 	<div class='buscador' id='buscador'><div id='divInBuscador' style='margin:10px; width:100%; height:100%;'><input type='text' id='inputbusc' name='inputbusc' placeholder='Buscar' onkeyup='BuscarSugerencias(this.value,event);'/></div>
 	<!---<img src='images/atras.png' style='cursor:pointer; position:absolute; top:0px; right:0px; z-index:100; display:block;' onclick='window.history.back();' id='backmenu'/>-->
