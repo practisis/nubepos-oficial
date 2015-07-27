@@ -5,7 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>NubePOS 1.0</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <!--<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">-->
+		
+		<meta name = "format-detection" content = "telephone=no"/>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width;" />
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="js/jquery.min.js"></script>
@@ -44,10 +47,47 @@
         <link rel="stylesheet" href="styles/estilotemp.css">
         <script type="text/javascript" src="js/cordova.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
+		 <script type="text/javascript" src="js/indexscan.js"></script>
         <!-- end needs images -->
 		<link rel="stylesheet" href="styles/mainformated.css">
+		
+		 <script type="text/javascript" src="spec/lib/jasmine-1.2.0/jasmine.js"></script>
+        <script type="text/javascript" src="spec/lib/jasmine-1.2.0/jasmine-html.js"></script>
+
+        <!-- include spec files here... -->
+        <script type="text/javascript" src="spec/helper.js"></script>
+        <script type="text/javascript" src="spec/index.js"></script>
+
+        <script type="text/javascript">
+            (function() {
+                var jasmineEnv = jasmine.getEnv();
+                jasmineEnv.updateInterval = 1000;
+
+                var htmlReporter = new jasmine.HtmlReporter();
+
+                jasmineEnv.addReporter(htmlReporter);
+
+                jasmineEnv.specFilter = function(spec) {
+                    return htmlReporter.specFilter(spec);
+                };
+
+                var currentWindowOnload = window.onload;
+
+                window.onload = function() {
+                    if (currentWindowOnload) {
+                        currentWindowOnload();
+                    }
+                    execJasmine();
+                };
+
+                function execJasmine() {
+                    jasmineEnv.execute();
+                }
+            })();
+        </script>
     </head>
     <body data-ng-app="app" id="app" data-custom-background data-off-canvas-nav class='cuerpoGeneral'>
+		<div id="stage" style="display:none;"></div>
         <div data-ng-controller="AppCtrl">
             <div data-ng-hide="isSpecificPage()" data-ng-cloak>
                <section id="header" class="top-header">
@@ -61,8 +101,8 @@
 						<span>NubePOS</span>
 					</a>
 				</div>
-				<div onclick='abrirLogin()' style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
-					Sincronizar 
+				<div style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
+					<input type="button" value="scan" onclick="dale();" ontouch="dale();" style="width: 100px; height: 30px; font-size: 1em"/>
 				</div>
 				<!-- needs to be put after logo to make it working-->
 				<div class="menu-button" toggle-off-canvas>
