@@ -50,41 +50,6 @@
 		 <script type="text/javascript" src="js/indexscan.js"></script>
         <!-- end needs images -->
 		<link rel="stylesheet" href="styles/mainformated.css">
-		
-		 <script type="text/javascript" src="spec/lib/jasmine-1.2.0/jasmine.js"></script>
-        <script type="text/javascript" src="spec/lib/jasmine-1.2.0/jasmine-html.js"></script>
-
-        <!-- include spec files here... -->
-        <script type="text/javascript" src="spec/helper.js"></script>
-        <script type="text/javascript" src="spec/index.js"></script>
-
-        <script type="text/javascript">
-            (function() {
-                var jasmineEnv = jasmine.getEnv();
-                jasmineEnv.updateInterval = 1000;
-
-                var htmlReporter = new jasmine.HtmlReporter();
-
-                jasmineEnv.addReporter(htmlReporter);
-
-                jasmineEnv.specFilter = function(spec) {
-                    return htmlReporter.specFilter(spec);
-                };
-
-                var currentWindowOnload = window.onload;
-
-                window.onload = function() {
-                    if (currentWindowOnload) {
-                        currentWindowOnload();
-                    }
-                    execJasmine();
-                };
-
-                function execJasmine() {
-                    jasmineEnv.execute();
-                }
-            })();
-        </script>
     </head>
     <body data-ng-app="app" id="app" data-custom-background data-off-canvas-nav class='cuerpoGeneral'>
 		<div id="stage" style="display:none;"></div>
@@ -102,7 +67,7 @@
 					</a>
 				</div>
 				<div style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
-					<input type="button" value="scan" onclick="dale();" ontouch="dale();" style="width: 100px; height: 30px; font-size: 1em"/>
+					Sincronizar
 				</div>
 				<!-- needs to be put after logo to make it working-->
 				<div class="menu-button" toggle-off-canvas>
