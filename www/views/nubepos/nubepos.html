@@ -119,10 +119,15 @@
 				</div>
 			</div>
 	</div>
-	<div class='scan' id='scan' onclick='verScan()'>
+	<div class='scan' id='scan' onclick='dale()'>
 		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
 		<div class='boton' id='btn_scan'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
 	<!--<img src='images/btnscan.png' style='cursor:pointer; width:100%;'/>-->
+		</div>
+	</div>
+	<div class="scan" id="scancodebar" onclick="dale()">
+		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
+			<div class='boton' id='barcodescanner'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
 		</div>
 	</div>
 	<div class='buscador' id='buscador'><div id='divInBuscador' style='margin:10px; width:100%; height:100%;'><input type='text' id='inputbusc' name='inputbusc' placeholder='Buscar' onkeyup='BuscarSugerencias(this.value,event);'/></div>
@@ -714,4 +719,19 @@
 </div>
 <script>
 	init();
+function dale(){
+alert("vamos");
+cordova.plugins.barcodeScanner.scan(
+      function (result) {
+          alert("We got a barcode\n" +
+                "Result: " + result.text + "\n" +
+                "Format: " + result.format + "\n" +
+                "Cancelled: " + result.cancelled);
+      }, 
+      function (error) {
+          alert("Scanning failed: " + error);
+      }
+   );
+   
+}
 </script>
