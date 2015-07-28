@@ -9,6 +9,23 @@
     // Populate the database
     //
     
+	
+function dale(){
+alert("vamos");
+cordova.plugins.barcodeScanner.scan(
+      function (result) {
+          alert("We got a barcode\n" +
+                "Result: " + result.text + "\n" +
+                "Format: " + result.format + "\n" +
+                "Cancelled: " + result.cancelled);
+      }, 
+      function (error) {
+          alert("Scanning failed: " + error);
+      }
+   );
+   
+}
+	
     function iniciaDB(tx){
 		console.log("Ana");		
 		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
@@ -40,6 +57,7 @@
 			//console.log('Ana');
 			$('#myModal').modal('hide');
 		});
+		dale();
     }
 
     function populateDB(tx){
