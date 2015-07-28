@@ -57,7 +57,6 @@ cordova.plugins.barcodeScanner.scan(
 			//console.log('Ana');
 			$('#myModal').modal('hide');
 		});
-		dale();
     }
 
     function populateDB(tx){
