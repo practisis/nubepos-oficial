@@ -6,7 +6,7 @@
 			<table style='width:100%; font-size:13px; text-align:center;' class='table'>
 				<tbody>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<input style='display:none;' id='idproducto' name='idproducto'/>
 							<input class="form-control" type="text" autofocus=""  placeholder="Nombre " name='nombreproducto' id='nombreproducto'>
 						</td>
@@ -15,20 +15,32 @@
 						<td style='vertical-align:middle;'>
 							<input class="form-control" type="text" autofocus=""  placeholder="Codigo " name='codigoproducto' id='codigoproducto'>
 						</td>
+						<td>
+							<div class="appp">
+								<div id="devicereadyp" class="blink" style="display:none;">
+									<p class="event listeningp">Connecting to Device</p>
+									<p class="event receivedp">Device is Ready</p>
+								</div>
+								 <p><a style="font-size:22px; padding:5px 15px; text-decoration:none;" href="#" class="topcoat-button botonr" id="scanp">SCAN</a></p>
+							</div>
+							<script>
+								appp.initialize();
+							</script>
+						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<input class="form-control" type="number" autofocus=""  placeholder="Precio sin imp " name='precioproducto' id='precioproducto' onkeypress="return soloNumerosprecio(event)">
 						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<input class="form-control" type="text" autofocus=""  placeholder="Categoría" id="search-renderitem" name="search-renderitem" onkeydown='verbusquedacateg();'/>
 							<input id='idcategoria' style='display:none;' value='0'/>
 						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle; text-align:left'>
+						<td style='vertical-align:middle; text-align:left' colspan="2">
 							<div class="checkbox">
 								<label>
 								  <input type="checkbox" name='coniva' id='coniva' checked> Carga IVA en la venta
@@ -47,12 +59,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<button id='guardar' class="btn btn-primary btn-md" type='button' onclick='GuardaProducto();'>Guardar</button>
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td colspan="2">
 							<div id='jsalert' style='display:none;' class="alert alert-danger" role="alert" style='font-size:12px;'></div>
 						</td>
 					</tr>
@@ -227,5 +239,6 @@ function soloNumerosprecio(e){
     if(letras.indexOf(tecla)==-1 && !tecla_especial){
 	    return false;
 	}
+	
 }
 </script>
