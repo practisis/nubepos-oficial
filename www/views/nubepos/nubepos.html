@@ -121,19 +121,18 @@
 				</div>
 			</div>
 	</div>
-	<!--<div class='scan' id='scan' onclick='dale()'>
-		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
-		<div class='boton' id='btn_scan'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
-	<img src='images/btnscan.png' style='cursor:pointer; width:100%;'/>
-		</div>
-	</div>-->
-	<!--<div class="scan" id="scancodebar" onclick="dale()">
-		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
-			<div class='boton' id='barcodescanner'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
-		</div>
-	</div>-->
 	<div style="position:relative; z-index:2000;">
-		
+		<div class="app">
+			 <div id="deviceready" class="blink">
+				<p class="event listening">Connecting to Device</p>
+				<p class="event received">Device is Ready</p>
+			</div>
+			 <p><a href="#" class="topcoat-button" id="scan">SCAN</a></p>
+		</div>
+		<script type="text/javascript" src="js/jsscan.js"></script>
+		<script>
+			app.initialize();
+		</script>
 	</div>
 	<!--<iframe src="scan/index.html" style="position:relative; z-index:500; width:100px; height:30px; overflow:hidden; margin-left:10px; margin-top:30px;" frameborder="0"></iframe>-->
 	<div class='buscador' id='buscador' style="display:none;"><div id='divInBuscador' style='margin:10px; width:100%; height:100%;'><input type='text' id='inputbusc' name='inputbusc' placeholder='Buscar' onkeyup='BuscarSugerencias(this.value,event);'/></div>
