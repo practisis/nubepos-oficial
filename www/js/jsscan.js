@@ -42,10 +42,11 @@ var app = {
 
         scanner.scan( function (result) { 
 
-            alert("We got a barcode\n" + 
-            "Result: " + result.text + "\n" + 
-            "Format: " + result.format + "\n" + 
-            "Cancelled: " + result.cancelled);  
+            // alert("We got a barcode\n" + 
+            // "Result: " + result.text + "\n" + 
+            // "Format: " + result.format + "\n" + 
+            // "Cancelled: " + result.cancelled); 
+			$('#inputbusc').val(result.text);
 
            console.log("Scanner result: \n" +
                 "text: " + result.text + "\n" +
