@@ -8,9 +8,7 @@
 
     // Populate the database
     //
-
-//fin barcodeScanner
-	
+    
     function iniciaDB(tx){
 		console.log("Ana");		
 		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);

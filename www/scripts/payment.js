@@ -506,17 +506,17 @@ function performPurchase(restaurant){
 			var hoy=new Date().getTime();
 			//console.log(hoy);
 			
-			// var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-			// db.transaction(Ingresafacturas, errorCB, successCB);
-			// function Ingresafacturas(tx){
-				// tx.executeSql("INSERT INTO FACTURAS(clientName,RUC,address,tele,fetchJson,paymentsUsed,cash,cards,cheques,vauleCxC,paymentConsumoInterno,tablita,aux,acc,echo,fecha)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[clientName,RUC,address,tele,fetchJson,paymentsUsed,cash,cards,cheques,valueCxC,paymentConsumoInterno,table,aux,acc,echo,hoy],function(){
-					// console.log("Nueva Factura Ingresada");
-					// $('#pay').fadeOut('fast');
-					// envia('nubepos/nubepos/');
-				// });
-			// }
+			var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+			db.transaction(Ingresafacturas, errorCB, successCB);
+			function Ingresafacturas(tx){
+				tx.executeSql("INSERT INTO FACTURAS(clientName,RUC,address,tele,fetchJson,paymentsUsed,cash,cards,cheques,vauleCxC,paymentConsumoInterno,tablita,aux,acc,echo,fecha)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[clientName,RUC,address,tele,fetchJson,paymentsUsed,cash,cards,cheques,valueCxC,paymentConsumoInterno,table,aux,acc,echo,hoy],function(){
+					console.log("Nueva Factura Ingresada");
+					$('#pay').fadeOut('fast');
+					envia('nubepos/nubepos/');
+				});
+			}
 			
-			// $('#subtotalSinIva,#subtotalIva,#descuentoFactura,#totalmiFactura').val('0');
+			$('#subtotalSinIva,#subtotalIva,#descuentoFactura,#totalmiFactura').val('0');
 			
 			
 			$('#pay').hide();
@@ -530,7 +530,7 @@ function performPurchase(restaurant){
 			$('.paymentMethods').each(function(){
 				if($(this).val() != '' && $(this).val() != 0 && $(this).val() != null){
 					var formPayment = $(this).attr('paymentMethod');
-					$('#printFormsPayments').append('<tr><td style="text-align:center;" id="pagoForm">\
+					$('#printFormsPayments').append('<tr><td style="text-align:center;">\
 														'+formPayment+'\
 													</td></tr>');
 				}
@@ -538,37 +538,27 @@ function performPurchase(restaurant){
 			var datosProductos = JSON.parse(fetchJson);
 			var productos = datosProductos.Pagar[0].producto;
 			for(var i in productos){
-				var precioUnit = productos[i].precio_prod;
-				precioUnit = parseFloat(precioUnit).toFixed(2)
-				var precioTot = productos[i].precio_total;
-				precioTot = parseFloat(precioTot).toFixed(2);
-				$('#printProducts').append('<tr class="productosComprados">\
-												<td class="canti">'+productos[i].cant_prod+'</td>\
-												<td class="descrip">'+productos[i].nombre_producto+'</td>\
-												<td class="valUnit">'+precioUnit+'</td>\
-												<td class="valTot">'+precioTot+'</td>\
+				$('#printProducts').append('<tr>\
+												<td>'+productos[i].cant_prod+'</td>\
+												<td>'+productos[i].nombre_producto+'</td>\
+												<td>'+productos[i].precio_prod+'</td>\
+												<td>'+productos[i].precio_total+'</td>\
 											</tr>');
 			}
 			
 			var datosFactura = JSON.parse(fetchJson);
 			var subsinIVA = datosFactura.Pagar[0].factura.subtotal_sin_iva;
-			subsinIVA = parseFloat(subsinIVA).toFixed(2);
 			$('#subsiniva').html(subsinIVA);
 			var subIVA = datosFactura.Pagar[0].factura.subtotal_iva;
-			subIVA = parseFloat(subIVA).toFixed(2);
 			$('#subconiva').html(subIVA);
 			var impuestos = datosFactura.Pagar[0].factura.impuestos;
-			var ivaImp = impuestos.split("/");
-			var iva = parseFloat(ivaImp[1]).toFixed(2);
-			$('#impuestos').html(iva);
+			$('#impuestos').html(impuestos);
 			var descuentoFac = datosFactura.Pagar[0].factura.descuento;
-			descuentoFac = parseFloat(descuentoFac).toFixed(2);
 			$('#descFac').html(descuentoFac);
 			var totalFac = datosFactura.Pagar[0].factura.total;
-			totalFac = parseFloat(totalFac).toFixed(2);
 			$('#totalPagado').html(totalFac);
 			
-			console.log(datosFactura.Pagar[0]);
+			console.log(datosFactura.Pagar[0].producto);
 			
 			$('#printFactura').show();
 			/**/
@@ -630,38 +620,6 @@ function performPurchase(restaurant){
 		alert("Por favor, elija un cliente.");
 	}
 }
-
-
-function impresionMovil(){
-	var numeroFactura = $('#numFac').val();
-	var nombreCliente = $('#nomCli').val();
-	var rucCliente = $('#docCli').val();
-	var pagoForm = $('#pagoForm').html();
-	var valores = '';
-	$('.productosComprados').each(function(){
-		var cant = $(this).find('.canti').html();
-		var des = $(this).find('.descrip').html();
-		var unit = $(this).find('.valUnit').html();
-		var tot = $(this).find('.valTot').html();
-		
-		valores += cant +'|'+ des +'|'+ unit +'|'+ tot +'|'+'@';
-	});
-	var valores_form = valores.substring(0,valores.length -1);
-	var subnoiva = $('#subsiniva').html();
-	var subiva = $('#subconiva').html();
-	var iva = $('#impuestos').html();
-	var descuen = $('#descFac').html();
-	var total = $('#totalPagado').html();
-	$.ajax({
-		type: 'POST',
-		data: 'numeroFactura='+ numeroFactura +'&nombreCliente='+ nombreCliente +'&rucCliente='+ rucCliente +'&pagoForm='+ pagoForm +'&valores='+ valores_form +'&subnoiva='+ subnoiva +'&subiva='+ subiva +'&iva='+ iva +'&descuen='+ descuen +'&total='+total,
-		url: 'views/nubepos/ajax/ajaxImpresionMovil.php',
-		success: function(response){
-			console.log(response);
-			}
-		});
-}
-
 function imprSelec(muestra)
 {
   var ficha=document.getElementById(muestra);

@@ -3,12 +3,9 @@
 <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>NubePOS 1.0</title>
+        <title>NubePOS 2.0</title>
         <meta name="description" content="">
-        <!--<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">-->
-		
-		<meta name = "format-detection" content = "telephone=no"/>
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="js/jquery.min.js"></script>
@@ -18,7 +15,7 @@
 		
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 		<link rel="stylesheet" href="css/jquery-ui.css"/>
-		<script type="text/javascript" src="scripts/funciones.js"></script>
+		
 		
 		<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
 		<script src="js/raphael-min.js"></script>
@@ -45,6 +42,7 @@
 		
 		
         <link rel="stylesheet" href="styles/estilotemp.css">
+        <script type="text/javascript" src="js/cordova.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
         <!-- end needs images -->
 		<link rel="stylesheet" href="styles/mainformated.css">
@@ -63,15 +61,9 @@
 						<span>NubePOS</span>
 					</a>
 				</div>
-<<<<<<< HEAD
 				<!-- <div onclick='abrirLogin()' style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
 					Sincronizar 
 				</div> -->
-=======
-				<div style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
-					Sincronizar
-				</div>
->>>>>>> 322c6e41085894f1afd59d72ab6a1703da7421fe
 				<!-- needs to be put after logo to make it working-->
 				<div class="menu-button" toggle-off-canvas>
 					<span class="icon-bar"></span>
@@ -221,11 +213,6 @@
 		</div>
 
     </body>
-
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="barcodescanner.js"></script>
-<script type="text/javascript" src="js/jsscan.js"></script>
-<script type="text/javascript" src="js/jsscanprod.js"></script>
 <script>
 	
 	$( document ).ready(function() {
@@ -654,12 +641,8 @@ $('.menu-button').on('click',function(){
 		lugar="views/clientes/nuevocliente.html";
 		if(donde=='historial')
 		lugar="views/facturacion/historial.html";
-<<<<<<< HEAD
 		if(donde=='cloud')
 		lugar="views/cloud/indexCloud.html";
-=======
-		$('#myModal').delay(1500).modal('hide');
->>>>>>> 322c6e41085894f1afd59d72ab6a1703da7421fe
 		$('#content').load(lugar,function(){
 		    $('#myModal').modal('hide');
 		});
