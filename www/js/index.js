@@ -8,7 +8,9 @@
 
     // Populate the database
     //
-    
+
+//fin barcodeScanner
+	
     function iniciaDB(tx){
 		console.log("Ana");		
 		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
@@ -19,61 +21,6 @@
 			if(existen==0)
 				db.transaction(Ingresaproductos,errorCB,successCB);
 		});
-		
-		
-		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-		//tx.executeSql('DROP TABLE IF EXISTS PRODUCTOS');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS empresa (id integer primary key AUTOINCREMENT, nombre integer )');
-		
-		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-		//tx.executeSql('DROP TABLE IF EXISTS PRODUCTOS');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS logActualizar (id integer primary key AUTOINCREMENT, tabla text , incicial integer , final integer)');
-		tx.executeSql('select count(id) as cuantos from logActualizar',[],function(tx,res){
-		var existenD=res.rows.item(0).cuantos;
-			if(existenD==0){
-				for(var i = 1 ; i <= 5 ; i++){
-					var tabla ='';
-					if(i == 1){
-						tabla ='CAJA_APERTURA_CIERRE';
-					}
-					if(i == 2){
-						tabla ='CATEGORIAS';
-					}
-					if(i == 3){
-						tabla ='CLIENTES';
-					}
-					if(i == 4){
-						tabla ='FACTURAS';
-					}
-					if(i == 5){
-						tabla ='PRODUCTOS';
-					}
-					
-					insertaTablas(tabla);
-				}
-			}
-		});	
-		
-		
-		
-		function insertaTablas(tabla){
-			console.log(tabla);
-			var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-			var inicia =0;
-			tx.executeSql('INSERT INTO logActualizar (tabla , incicial ,final) VALUES (?,? ,? );',[tabla , inicia , inicia],function(tx,res){
-				console.log("logActualizar :"+res.insertId);
-			});	
-			
-		}
-		// tx.executeSql('SELECT COUNT(id_local) as cuantos FROM PRODUCTOS',[],function(tx,res){
-			// var existen=res.rows.item(0).cuantos;
-			// if(existen==0)
-				// db.transaction(Ingresaproductos,errorCB,successCB);
-		// });
-		
-		
-		
-		
 		//tx.executeSql('DROP TABLE IF EXISTS CATEGORIAS');
         tx.executeSql('CREATE TABLE IF NOT EXISTS CATEGORIAS (id integer primary key AUTOINCREMENT, categoria text, activo integer, existe integer)');
 		tx.executeSql('SELECT COUNT(id) as cuantos FROM CATEGORIAS',[],function(tx,res){
@@ -246,6 +193,85 @@
 			$('#email').val(row.email);
 		},errorCB,successCB);
 		});
+	}
+	
+	function BuscarSugerencias2(filtro,e){
+		
+		var buscar = $('#inputbusc').val();
+		//alert(buscar);
+		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+		db.transaction(function(tx){
+			tx.executeSql("SELECT * FROM PRODUCTOS WHERE formulado like '%"+buscar+"%'",[],function(tx,results){
+				console.log(results);
+				if(results.rows.length>0){
+					var row = results.rows.item(0);
+					var id = row.id;
+					var formulado = row.formulado;
+				}
+			},errorCB,successCB);
+		});
+		
+		if(e.keyCode==13){
+			var misugerencias=document.getElementsByClassName('sugerencia');
+			for(j=0;j<misugerencias.length;j++){
+				if(misugerencias[j].getAttribute('enfocada')==1){
+					misugerencias[j].firstChild.click();
+				}	
+			}
+			
+		}else if(e.keyCode==38){
+			if(document.getElementById('tableresults')){
+				$('.sugerencia').each(function(){
+					AclararSugerencia($(this)[0],false);
+				});
+				
+				if((celdaenfocada-1)>-1)
+					celdaenfocada-=1;
+				else
+					celdaenfocada=0;
+				console.log(celdaenfocada);
+				AclararSugerencia(document.getElementById('tableresults').rows[celdaenfocada].cells[0],true);
+			}
+		}else if(e.keyCode==40){
+			$('.sugerencia').each(function(){
+					AclararSugerencia($(this)[0],false);
+				});
+			console.log(e.keyCode);
+			if((celdaenfocada+1)<document.getElementById('tableresults').rows.length)
+					celdaenfocada+=1;
+				console.log(celdaenfocada);
+				AclararSugerencia(document.getElementById('tableresults').rows[celdaenfocada].cells[0],true);
+		}else{
+			if(filtro!=''){
+				$('#resultBuscador').fadeIn('slow');
+				$('#tableresults').html('');
+				// var json = $('#jsonProductos').html();
+				// var mijson = eval(''+json+'');
+				for(var j in results){
+					for(var k in results[j]){
+						for(i = 0; i < results[j][k].length; i++){
+								var item = results[j][k][i];
+								var suger='';
+								if(item.formulado.toLowerCase().indexOf(filtro.toLowerCase())>-1)
+									suger=item.formulado;
+								else if(item.codigo.toLowerCase().indexOf(filtro.toLowerCase())>-1)
+									suger=item.codigo;
+								
+								if(suger!='')
+								{
+									if(document.getElementById('tableresults').rows.length<4){
+										$('#tableresults').append("<tr><td class='sugerencia' onmouseover='AclararSugerencia(this,true);' onmouseout='AclararSugerencia(this,false);' enfocada='0'><div id='busc_"+ item.id +"' data-precio='"+ item.precio +"' data-impuestos='"+ item.formulado_impuestos +"' data-impuestosindexes='"+ item.formulado_tax_id +"' data-formulado='"+ item.nombre.toUpperCase()+"' onclick='PlaySound(2); agregarCompra(this,2); return false;'>"+suger.toUpperCase()+"</div></td></tr>");
+									}
+									
+								}
+						}
+					}
+				}
+				if(mijson.length>0){
+					AclararSugerencia(document.getElementById('tableresults').rows[0].cells[0],true);
+				}
+			}
+		}
 	}
 	
 	function VerDatosFactura(id){

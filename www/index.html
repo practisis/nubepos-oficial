@@ -3,9 +3,12 @@
 <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>NubePOS 2.0</title>
+        <title>NubePOS 1.0</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <!--<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">-->
+		
+		<meta name = "format-detection" content = "telephone=no"/>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="js/jquery.min.js"></script>
@@ -15,7 +18,7 @@
 		
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 		<link rel="stylesheet" href="css/jquery-ui.css"/>
-		
+		<script type="text/javascript" src="scripts/funciones.js"></script>
 		
 		<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
 		<script src="js/raphael-min.js"></script>
@@ -42,7 +45,6 @@
 		
 		
         <link rel="stylesheet" href="styles/estilotemp.css">
-        <script type="text/javascript" src="js/cordova.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
         <!-- end needs images -->
 		<link rel="stylesheet" href="styles/mainformated.css">
@@ -54,16 +56,16 @@
 				<header class="clearfix">
 				<a href="#/" data-toggle-min-nav class="toggle-min" >
 				<i class="fa fa-bars"></i></a>
-
+					
 				<!-- Logo -->
 				<div class="logo">
 					<a href="#/">
 						<span>NubePOS</span>
 					</a>
 				</div>
-				<!-- <div onclick='abrirLogin()' style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
-					Sincronizar 
-				</div> -->
+				<div style='background-color:#23AE89;width:200px;padding-top:15px;padding-bottom:15px;position:relative;z-index:2000;float:right;text-align:center;margin-right:10%;border-radius:10px;cursor:pointer;'>
+					Sincronizar
+				</div>
 				<!-- needs to be put after logo to make it working-->
 				<div class="menu-button" toggle-off-canvas>
 					<span class="icon-bar"></span>
@@ -95,56 +97,38 @@
 						<li>
 							<a href='#'><i class="fa fa-usd  menuItem" style='color:#FFF;'><span class="icon-bg bg-orange"></span></i><span data-i18n="Ventas">Ventas</span><span style='padding-left:5px;' class="fa fa-caret-down" ></span></a>
 							<ul>
-								<li><a onclick="envia('nubepos/nubepos/');" href='#'><i class="fa fa-caret-right"></i><span data-i18n="Punto de Venta">Punto de Venta</span></a></li>
-								<li><a href="#" onclick="envia('historial');"><i class="fa fa-caret-right"></i><span data-i18n="Historial">Historial</span></a></li>
+								<li><a href='#'><i class="fa fa-caret-right"></i><span onclick="envia('nubepos/nubepos/');" data-i18n="Punto de Venta">Punto de Venta</span></a></li>
+								<li><a href="#"><i class="fa fa-caret-right"></i><span onclick="envia('historial');" data-i18n="Historial">Historial</span></a></li>
 							</ul>
 						</li>
 						<li>
 							<a href="#"><i class="fa fa-diamond menuItem" style='color:#FFF;'><span class="icon-bg bg-warning"></span></i><span data-i18n="Productos">Productos</span><span style='padding-left:5px;' class="fa fa-caret-down" ></span></a>
 							<ul>
-								<li><a onclick="envia('listaproductos');" href='#'><i class="fa fa-caret-right"></i><span data-i18n="Lista de Productos">Lista de Productos</span></a></li>
-								<li><a onclick="envia('nuevoproducto');" href="#"><i class="fa fa-caret-right"></i><span data-i18n="Nuevo Producto">Nuevo Producto</span></a></li>
+								<li><a href='#'><i class="fa fa-caret-right"></i><span  onclick="envia('listaproductos');" data-i18n="Lista de Productos">Lista de Productos</span></a></li>
+								<li><a href="#"><i class="fa fa-caret-right"></i><span onclick="envia('nuevoproducto');" data-i18n="Nuevo Producto">Nuevo Producto</span></a></li>
 							</ul>
 						</li>
 						<li>
 							<a href="#"><i class="fa fa-barcode menuItem" style='color:#FFF;'><span style='color:#FFF;' class="icon-bg bg-success" ></span></i><span data-i18n="Inventarios">Inventarios<span style='padding-left:5px;' class="fa fa-caret-down" ></span></span></a>
 							<ul>
-								<li><a onclick="envia('tomainventario');" href='#'><i class="fa fa-caret-right"></i><span data-i18n="Toma de Inventario">Toma de Inventario</span></a></li>
+								<li><a href='#'><i class="fa fa-caret-right"></i><span  onclick="envia('tomainventario');" data-i18n="Toma de Inventario">Toma de Inventario</span></a></li>
 								<li><a href="#"><i class="fa fa-caret-right"></i><span data-i18n="Ver Inventario">Ver Inventario</span></a></li>
 							</ul>
 						</li>
 						<li>
 							<a href="#"><i class="fa fa-users menuItem" style='color:#FFF;'><span class="icon-bg bg-info"></span></i><span data-i18n="Clientes">Clientes</span><span style='padding-left:5px;' class="fa fa-caret-down" ></span></a>
 								<ul>
-								<li><a onclick="envia('listaclientes');" href='#'><i class="fa fa-caret-right"></i><span data-i18n="Lista de Clientes">Lista de Clientes</span></a></li>
-								<li><a onclick="envia('nuevocliente');" href="#"><i class="fa fa-caret-right"></i><span data-i18n="Nuevo Cliente">Nuevo Cliente</span></a></li>
+								<li><a href='#'><i class="fa fa-caret-right"></i><span onclick="envia('listaclientes');" data-i18n="Lista de Clientes">Lista de Clientes</span></a></li>
+								<li><a href="#"><i class="fa fa-caret-right"></i><span onclick="envia('nuevocliente');" data-i18n="Nuevo Cliente">Nuevo Cliente</span></a></li>
 								</ul>
 						</li>
-						<!-- <li onclick='abrirVentanaCuentas()'>
+						<li onclick='abrirVentanaCuentas()'>
 							<a href="#">
 								<i class="fa fa-cloud menuItem" style='color:#FFF;'>
 									<span class="icon-bg bg-primary"></span>
 								</i>
 								<span data-i18n="Cloud">Cloud</span><br/>
 								<span id='id_emp' style='margin-left:12px;font-size:12px;color:#31B0D5;'></span>
-							</a>
-						</li> -->
-						<li>
-							<a onclick="envia('cloud');" href='#'> 
-								<i class="fa fa-dashboard menuItem" style='color:#FFF;'>
-									<span class="icon-bg bg-primary"></span>
-								</i>
-								<table style='' width='75%'>
-									<tr>
-										<td width='40%'>
-											<span data-i18n="Cloud">Cloud</span><br/>
-										</td>
-										<td align='right' width='60%'>
-											<!--<span id='id_emp' style='font-size:12px;color:#31B0D5;'></span>-->
-											<i class="fa fa-exclamation-circle" id='alertaNuevos' style='color:red;display:none;'></i>
-										</td>
-									</tr>
-								</table>
 							</a>
 						</li>
 					</ul>
@@ -176,113 +160,115 @@
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 	<!--Envia a llamar a login-->
-		<div style='width:100%;height:100%;background-color:rgba(0,0,0,0.7);position:absolute;z-index:2000;display:none;' id="loginPractisis">	
-			<div  style="background: rgba(0,0,0 0.8) none repeat scroll 0% 0%; width: 600px; height: auto; position: relative; z-index: 20000; text-align: center;margin:0 auto;margin-top:10%;">
-				<br/>
-				<br/>
-				<div id="popupLogin" style="padding:20px;margin-top: 1000px; box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75); background-color: #ffffff; color: #000000; margin-left: auto; margin-right: auto;overflow:auto;height:350px;">
-					<div class="encabezadorojo" style='position:relative; height:30px; font-size:20px;'>LOGIN<img src='images/xcierre.png' style='position:absolute; top:3px; right:5px; cursor:pointer;' onclick='cerrarLogin()'/></div>
-					<div style='background-color:#E0DEDE; padding-top:20px; padding-bottom:20px;' id='contieneEmpresas'>
-						<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
-							<div class="col-md-12"  style="text-align: center;">
-									<div class="panel panel-default">
-											<div  class="panel-heading">
-												<strong><span class="glyphicon glyphicon-th"></span>
-												 Autentificación de Usuario
-											</div>        
-											<div class="panel-body">
-												<div class="input-group">
-													<label class="input-group-addon">User:</label>
-													<input type="text" id="user" class="form-control" />
-												</div>
-												<div style="height:10px;"></div>
-												<div class="input-group">
-												<label class="input-group-addon">Pass:</label>
-												<input type="password" id="pass" class="form-control" />
-												</div>
-												<div style="height:10px;"></div>
-												<button class="btn btn-default" id='btnvalida' type="button" onclick="valida();">Login</button>
-											</div>
+<div style='width:100%;height:100%;background-color:rgba(0,0,0,0.7);position:absolute;z-index:2000;display:none;' id="loginPractisis">	
+	<div  style="background: rgba(0,0,0 0.8) none repeat scroll 0% 0%; width: 600px; height: auto; position: relative; z-index: 20000; text-align: center;margin:0 auto;margin-top:10%;">
+		<br/>
+		<br/>
+		<div id="popupLogin" style="padding:20px;margin-top: 1000px; box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75); background-color: #ffffff; color: #000000; margin-left: auto; margin-right: auto;overflow:auto;height:350px;">
+			<div class="encabezadorojo" style='position:relative; height:30px; font-size:20px;'>LOGIN<img src='images/xcierre.png' style='position:absolute; top:3px; right:5px; cursor:pointer;' onclick='cerrarLogin()'/></div>
+			<div style='background-color:#E0DEDE; padding-top:20px; padding-bottom:20px;' id='contieneEmpresas'>
+				<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+					<div class="col-md-12"  style="text-align: center;">
+							<div class="panel panel-default">
+									<div  class="panel-heading">
+										<strong><span class="glyphicon glyphicon-th"></span>
+										 Autentificación de Usuario
+									</div>        
+									<div class="panel-body">
+										<div class="input-group">
+											<label class="input-group-addon">User:</label>
+											<input type="text" id="user" class="form-control" />
+										</div>
+										<div style="height:10px;"></div>
+										<div class="input-group">
+										<label class="input-group-addon">Pass:</label>
+										<input type="password" id="pass" class="form-control" />
+										</div>
+										<div style="height:10px;"></div>
+										<button class="btn btn-default" id='btnvalida' type="button" onclick="valida();">Login</button>
 									</div>
-											<div id="mensaje"></div>
-								</div>
+							</div>
+									<div id="mensaje"></div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+
+
+<div style='width:100%;height:100%;background-color:rgba(0,0,0,0.7);position:absolute;z-index:2000;display:none;' id="loginPractisisNuevo">	
+	<div  style="background: rgba(0,0,0 0.8) none repeat scroll 0% 0%; width: 600px; height: auto; position: relative; z-index: 20000; text-align: center;margin:0 auto;margin-top:10%;">
+		<br/>
+		<br/>
+		<div id="popupLoginNuevo" style="padding:20px;margin-top: 1000px; box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75); background-color: #ffffff; color: #000000; margin-left: auto; margin-right: auto;overflow:auto;height:350px;">
+			<div class="encabezadorojo" style='position:relative; height:30px; font-size:20px;'>LOGIN PRACTISIS<img src='images/xcierre.png' style='position:absolute; top:3px; right:5px; cursor:pointer;' onclick='cerrarLogin2()'/></div>
+			<div style='background-color:#E0DEDE; padding-top:20px; padding-bottom:20px;' id='contieneEmpresasNuevo'>
+				<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+					<div class="col-md-12"  style="text-align: center;">
+							<div class="panel panel-default">
+									<div  class="panel-heading">
+										<strong><span class="glyphicon glyphicon-th"></span>
+										 Autentificación de Usuario
+									</div>        
+									<div class="panel-body">
+										<div class="input-group">
+											<label class="input-group-addon">User:</label>
+											<input type="text" id="user2" class="form-control" />
+										</div>
+										<div style="height:10px;"></div>
+										<div class="input-group">
+										<label class="input-group-addon">Pass:</label>
+										<input type="password" id="pass2" class="form-control" />
+										</div>
+										<div style="height:10px;"></div>
+										<button class="btn btn-default" id='btnvalida2' type="button" onclick="valida2();">Login</button>
+									</div>
+							</div>
+									<div id="mensaje2"></div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div style='width:100%;height:100%;background-color:rgba(0,0,0,0.7);position:absolute;z-index:2000;display:none;' id="ventanaCuentas">	
+	<div  style="background: rgba(0,0,0 0.8) none repeat scroll 0% 0%; width: 600px; height: auto; position: relative; z-index: 20000; text-align: center;margin:0 auto;margin-top:10%;">
+		<div class='row' id='popupLogin2' style="padding-top:6%;margin-top: 1000px; box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75); background-color: #ffffff; color: #000000; margin-left: auto; margin-right: auto;overflow:auto;height:130px;border:10px solid #2EC1CC;">
+			<i class="fa fa-times-circle-o fa-2x" style='position:relative;float:right;z-index:2000;color:#000;margin-top:-37px;' onclick='cerrarVentanaCuentas()'></i>
+			<div class='col-md-6'>
+				<button type="button" class="btn btn-primary">Crear Nueva Cuenta NubePOS</button>
+			</div>
+			<div class='col-md-6'>
+				<button type="button" class="btn btn-primary" onclick='usarLogin()'>Usar Cuenta Existente NubePOS</button>
+			</div>
+		</div>
+	</div>
+</div>
 
     </body>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="barcodescanner.js"></script>
+<script type="text/javascript" src="js/jsscan.js"></script>
+<script type="text/javascript" src="js/jsscanprod.js"></script>
+
 <script>
 	
-	$( document ).ready(function() {
-			console.log( "listos espartanos!" );
-			setInterval(saberNuevos, 3000);
-		});
-		
-		function saberNuevos(){
-			var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-			db.transaction(function(tx){
-				var excluir = 0;
-				tx.executeSql('SELECT * from logActualizar where final <> ? ',[excluir],function(tx,results){
-					var actualizar='';
-					for (var i=0; i < results.rows.length; i++){
-						var row = results.rows.item(i);
-						var tabla = row.tabla;
-						var actual = row.final;
-						console.log('tabla : '+tabla+'  cantidad : ' + actual);
-						actualizar+='<tr><td align="left">'+tabla+'</td><td align="center">Actualizaciones : '+actual+'</td></tr>';
-						muestraActualiziones(actualizar);
-					}
-					
-				});
-			
-			},errorCB,successCB);
-		}
-		
-		function muestraActualiziones(datos){
-			$('#recibeAlertasActualizaciones').html("<table style='width:100%;' border='0' cellpadding='10px' class='table table-striped' ><tr><th>Accion</th><th>Cantidad</th></tr>"+datos+"</table>");
-			$('#alertaNuevos').fadeIn('slow');
-			setTimeout(function() {
-				$('#alertaNuevos').fadeOut('slow');
-			},1500);
-			//setTimeout(function() {
-				//$('#recibeAlertasActualizaciones').fadeOut('slow');
-			//}, 5000);
-		}
-	
+</script>
+
+<script>
 	function recibeConsultaApi(id_emp){
 		
 		localStorage.setItem("empresa", id_emp);
 		
 		 var empresa = localStorage.getItem('empresa');
-		 $('#id_emp').html('Emp'+empresa);
-		 
-		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-		db.transaction(function(tx){
-			tx.executeSql('SELECT COUNT(id) as cuantos FROM empresa',[],function(tx,res){
-				var existen=res.rows.item(0).cuantos;
-				if(existen==0){
-					db.transaction(
-						function (tx){
-							tx.executeSql('INSERT INTO empresa (nombre) VALUES (?);',[id_emp],
-							function(tx,res){
-								console.log("vamos:"+res.insertId)
-							});				
-						},errorCB,successCB
-					);
-				}
-			});
-		
-		},errorCB,successCB);
-		
+		 $('#id_emp').html('Conectado a: Emp'+empresa);
 		setTimeout(function(){
 			cerrarLogin2()
 		}, 2000);
-		setTimeout(function(){
-			$('#cuentasSinc').css('display','none');
-			$('#mainDivSinc').fadeIn('slow');
-		}, 3000);
 		
 	}
 	//enviaConsultaApi(568);
@@ -358,34 +344,21 @@
 	}
 	
 	function cerrarLogin2(){
-		$('#popupLoginNuevo').fadeOut('slow');
-		setTimeout(function() {
-			$('#cuentasSinc').fadeIn('slow');
-		}, 1000);
+		$('#popupLoginNuevo').animate({
+			marginTop : '1000px'
+			},1000,function(){
+			$('#loginPractisisNuevo').fadeOut('slow');
+		});
 	}
 	
-	function nuevaCuenta(){
-		//alert('hola');
-		$('#popupLoginNuevo').css('display','none');
-		$('#cuentasSinc').css('display','none');
-		$('#contenedorNuevaCuenta').fadeIn('slow');
-		
-	}
-	
-	function cerrarLogin3(){
-		//alert('hola');
-		$('#contenedorNuevaCuenta').css('display','none');
-		$('#popupLoginNuevo').css('display','none');
-		$('#cuentasSinc').fadeIn('slow');
-		
-	}
 	
 	function usarLogin(){
-		$('#cuentasSinc').fadeOut('slow');
-		setTimeout(function() {
-			$('#popupLoginNuevo').fadeIn('slow');
-		}, 1000);
-
+		$('#popupLogin2').animate({
+			marginTop : '1000px'
+			},1000,function(){
+			$('#ventanaCuentas').fadeOut('slow');
+			abrirLogin2();
+		});
 	}
 	
 	
@@ -421,49 +394,33 @@
 	}  
 
 	function valida2(){
-		
+		document.getElementById('btnvalida2').innerHTML="<img src='images/loader.gif' width='20px'/>";
 		var quien=document.getElementById("user2").value;
 		var pass=document.getElementById("pass2").value;
 		var xmlhttp=false;
-		if(quien == ''){
-			$('#user2').effect('shake');
-		
-		}
-		
-		if (pass == '' ){
-			$('#pass2').effect('shake');
-		}
-		
-		if(quien == '' || pass == '' ){
-			
-		}else{
-			document.getElementById('btnvalida2').innerHTML="<img src='images/loader.gif' width='20px'/>";
-			if (!xmlhttp && typeof XMLHttpRequest!='undefined') { try {xmlhttp = new XMLHttpRequest(); } catch (e) { xmlhttp=false;}}
-			if (!xmlhttp && window.createRequest) {	try { xmlhttp = window.createRequest();} catch (e) { xmlhttp=false;}}
-			xmlhttp.open("GET","https://www.practisis.net/loginNubeposExistente.php?id="+quien+"&pass="+pass,true);
-			xmlhttp.onreadystatechange=function() {
-			if (xmlhttp.readyState==4){
-				if(xmlhttp.status==200){
-						var respuesta=xmlhttp.responseText;
-						console.log($.trim(respuesta));
-						if (respuesta.trim()!='error'){
-							$('#contieneEmpresasNuevo').html(respuesta);
-							
-						}else{
-							document.getElementById('btnvalida2').innerHTML="Login";
-							document.getElementById("mensaje2").innerHTML="Credenciales no autorizadas.";
-							document.getElementById("user").value="";
-							document.getElementById("pass").value="";
-						}
+		if (!xmlhttp && typeof XMLHttpRequest!='undefined') { try {xmlhttp = new XMLHttpRequest(); } catch (e) { xmlhttp=false;}}
+		if (!xmlhttp && window.createRequest) {	try { xmlhttp = window.createRequest();} catch (e) { xmlhttp=false;}}
+		xmlhttp.open("GET","https://www.practisis.net/loginNubeposExistente.php?id="+quien+"&pass="+pass,true);
+		xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4){
+			if(xmlhttp.status==200){
+					var respuesta=xmlhttp.responseText;
+					console.log($.trim(respuesta));
+					if (respuesta.trim()!='error'){
+						$('#contieneEmpresasNuevo').html(respuesta);
+						
+					}else{
+						document.getElementById("mensaje2").innerHTML="Credenciales no autorizadas.";
+						document.getElementById("user").value="";
+						document.getElementById("pass").value="";
+					}
 
-			}}} 
-			xmlhttp.send(null);
-		}
+		}}} 
+		xmlhttp.send(null);
 	}  
 
 var smallerMenu = false;
 $(document).ready(function(){
-	
 	$('.modal').each(centerModal);
 	$('#myModal').modal('show');
 	envia('dashboard');
@@ -641,8 +598,7 @@ $('.menu-button').on('click',function(){
 		lugar="views/clientes/nuevocliente.html";
 		if(donde=='historial')
 		lugar="views/facturacion/historial.html";
-		if(donde=='cloud')
-		lugar="views/cloud/indexCloud.html";
+		$('#myModal').delay(1500).modal('hide');
 		$('#content').load(lugar,function(){
 		    $('#myModal').modal('hide');
 		});

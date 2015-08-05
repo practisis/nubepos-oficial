@@ -8,6 +8,8 @@
 </script>
 <script type="text/javascript" src="scripts/funciones.js"></script>
 <script type="text/javascript" src="scripts/payment.js"></script>
+<!--link para llamar a la funcion scannerBarcode-->
+<!--link-->
 <div class="page page-default" style='position:relative;'>
 <div class="row">
 <div class="col-sm-12">
@@ -119,13 +121,31 @@
 				</div>
 			</div>
 	</div>
-	<div class='scan' id='scan' onclick='verScan()'>
+	<!--<div class='scan' id='scan' onclick='dale()'>
 		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
 		<div class='boton' id='btn_scan'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
-	<!--<img src='images/btnscan.png' style='cursor:pointer; width:100%;'/>-->
+	<img src='images/btnscan.png' style='cursor:pointer; width:100%;'/>
+		</div>
+	</div>-->
+	<!--<div class="scan" id="scancodebar" onclick="dale()">
+		<div id='divInScan' style='margin:10px; width:100%; height:100%;'>
+			<div class='boton' id='barcodescanner'><img src='images/simboloscan.png' style='height:30px; margin-right:5px;'/>SCAN</div>
+		</div>
+	</div>-->
+	<div style="position:relative; z-index:2000;">
+		<div class="app">
+			<div id="deviceready" class="blink" style="display:none;">
+				<p class="event listening">Connecting to Device</p>
+				<p class="event received">Device is Ready</p>
+			</div>
+			 <p style="margin-top:15px; margin-left:10px;"><a class="botonr" style="font-size:22px; padding:5px 15px; text-decoration:none;" href="#" class="topcoat-button" id="scan">SCAN</a></p>
 		</div>
 	</div>
-	<div class='buscador' id='buscador'><div id='divInBuscador' style='margin:10px; width:100%; height:100%;'><input type='text' id='inputbusc' name='inputbusc' placeholder='Buscar' onkeyup='BuscarSugerencias(this.value,event);'/></div>
+	<!--<iframe src="scan/index.html" style="position:relative; z-index:500; width:100px; height:30px; overflow:hidden; margin-left:10px; margin-top:30px;" frameborder="0"></iframe>-->
+	<div class='buscador' id='buscador' style="margin-left:10%;">
+		<div id='divInBuscador' style='margin:17px 70px; position:relative; z-index:2001; width:100%; height:100%;'>
+			<input type='text' id='inputbusc' name='inputbusc' placeholder='Buscar' onkeyup='BuscarSugerencias2(this.value,event);'/>
+		</div>
 	<!---<img src='images/atras.png' style='cursor:pointer; position:absolute; top:0px; right:0px; z-index:100; display:block;' onclick='window.history.back();' id='backmenu'/>-->
 	</div>
 	<div class='numpad' id='numpad'>
@@ -611,7 +631,7 @@
 					<input type="hidden" />
 				</td>
 				<td>
-					<strong>Impuestos:</strong>
+					<strong>I.V.A.:</strong>
 				</td>
 				<td id="impuestos">
 					
@@ -650,7 +670,7 @@
 					<table align='center'>
 						<tr>
 							<td>
-							<div style="width:80px; min-width:80px; height:30px; min-height:30px; float:right; padding-top:5px;" id="printpay" class="actiongreenbutton" onclick="">Imprimir</div>
+							<div style="width:80px; min-width:80px; height:30px; min-height:30px; float:right; padding-top:5px;" id="printpay" class="actiongreenbutton" onclick="impresionMovil()">Imprimir</div>
 							</td>
 							<td>
 								<div id="cancelButton" class='actionredbutton' onclick="cancelPayment(); return false;" style='min-width:80px; width:80px; height:30px; min-height:30px; padding-top:5px;'>Cancelar</div>
@@ -712,6 +732,8 @@
 </div>
 </div>
 </div>
+
 <script>
 	init();
+	app.initialize();
 </script>

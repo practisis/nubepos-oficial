@@ -6,7 +6,7 @@
 			<table style='width:100%; font-size:13px; text-align:center;' class='table'>
 				<tbody>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<input style='display:none;' id='idproducto' name='idproducto'/>
 							<input class="form-control" type="text" autofocus=""  placeholder="Nombre " name='nombreproducto' id='nombreproducto'>
 						</td>
@@ -15,20 +15,32 @@
 						<td style='vertical-align:middle;'>
 							<input class="form-control" type="text" autofocus=""  placeholder="Codigo " name='codigoproducto' id='codigoproducto'>
 						</td>
+						<td>
+							<div class="appp">
+								<div id="devicereadyp" class="blink" style="display:none;">
+									<p class="event listeningp">Connecting to Device</p>
+									<p class="event receivedp">Device is Ready</p>
+								</div>
+								 <p style="font-size:22px;"><a href="#" class="topcoat-button" id="scanp">SCAN</a></p>
+							</div>
+							<script>
+								appp.initialize();
+							</script>
+						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<input class="form-control" type="number" autofocus=""  placeholder="Precio sin imp " name='precioproducto' id='precioproducto' onkeypress="return soloNumerosprecio(event)">
 						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<input class="form-control" type="text" autofocus=""  placeholder="Categoría" id="search-renderitem" name="search-renderitem" onkeydown='verbusquedacateg();'/>
 							<input id='idcategoria' style='display:none;' value='0'/>
 						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle; text-align:left'>
+						<td style='vertical-align:middle; text-align:left' colspan="2">
 							<div class="checkbox">
 								<label>
 								  <input type="checkbox" name='coniva' id='coniva' checked> Carga IVA en la venta
@@ -47,12 +59,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td style='vertical-align:middle;'>
+						<td style='vertical-align:middle;' colspan="2">
 							<button id='guardar' class="btn btn-primary btn-md" type='button' onclick='GuardaProducto();'>Guardar</button>
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td colspan="2">
 							<div id='jsalert' style='display:none;' class="alert alert-danger" role="alert" style='font-size:12px;'></div>
 						</td>
 					</tr>
@@ -98,36 +110,6 @@ function verbusquedacateg(){
 		});
 }
 
-function actualizaLogProd(tabla){
-	var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-	
-	db.transaction(function(tx){
-		tx.executeSql('SELECT COUNT(id) as cuantos FROM PRODUCTOS',[],function(tx,res){
-			var existen=res.rows.item(0).cuantos;
-			//alert(existen);
-			tx.executeSql('update logActualizar set final = ? where tabla = ? ',[existen , tabla],function(tx,res){
-				console.log("logActualizar :"+res);
-			});		
-		});
-	
-	},errorCB,successCB);
-	
-}
-function actualizaLogCate(tabla){
-	var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-	
-	db.transaction(function(tx){
-		tx.executeSql('SELECT COUNT(id) as cuantos FROM CATEGORIAS',[],function(tx,res){
-			var existen=res.rows.item(0).cuantos;
-			//alert(existen);
-			tx.executeSql('update logActualizar set final = ? where tabla = ? ',[existen , tabla],function(tx,res){
-				console.log("logActualizar :"+res);
-			});		
-		});
-	
-	},errorCB,successCB);
-	
-}
 function GuardaProducto(){
 	if($('#idproducto').val()==''||$('#idproducto').val()==0){
 		var nombrep=$('#nombreproducto').val();
@@ -151,37 +133,25 @@ function GuardaProducto(){
 			if(idcategoria==0){
 				db.transaction(function(tx){
 				tx.executeSql('INSERT INTO CATEGORIAS(categoria,activo,existe) SELECT "'+categoria+'",1,0 WHERE NOT EXISTS(SELECT 1 FROM CATEGORIAS WHERE categoria = "'+categoria+'");',[],function(tx,results){
-					actualizaLogCate('CATEGORIAS');
 					$('#idcategoria').val(results.insertId);
 					console.log("categ:"+results.insertId);
 					idcategoria=$('#idcategoria').val();
-					var tabla = 'PRODUCTOS';
 					db.transaction(function(tx){
-					
 					tx.executeSql('INSERT INTO PRODUCTOS(id,formulado,codigo,precio,categoriaid,cargaiva,productofinal,materiaprima) SELECT 0,"'+nombrep+'","'+codigop+'","'+preciop+'",'+idcategoria+','+iva+','+prfinal+','+matprima+' WHERE NOT EXISTS(SELECT 1 FROM PRODUCTOS WHERE formulado like "'+nombrep+'" or codigo like "'+codigop+'");',[],function(tx,results){
 					console.log("prod:"+results.insertId);
 					envia("nuevoproducto");
-					actualizaLogProd("PRODUCTOS");
 					});
 					},errorCB,successCB);
 					});
 				},errorCB,successCB);
-				
-			//actualizaLogProd(tabla);
-			
-			
 			}else{
 				idcategoria=$('#idcategoria').val();
-				//var tabla = 'PRODUCTOS';
 				db.transaction(function(tx){
 				tx.executeSql('INSERT INTO PRODUCTOS(id,formulado,codigo,precio,categoriaid,cargaiva,productofinal,materiaprima) SELECT 0,"'+nombrep+'","'+codigop+'","'+preciop+'",'+idcategoria+','+iva+','+prfinal+','+matprima+' WHERE NOT EXISTS(SELECT 1 FROM PRODUCTOS WHERE formulado like "'+nombrep+'" or codigo like "'+codigop+'");',[],function(tx,results){
 				console.log("prod:"+results.insertId);
 				envia("nuevoproducto");
-				actualizaLogProd("PRODUCTOS");
 				});
 				},errorCB,successCB);
-				
-			
 			}
 		}else{
 			$('#jsalert').html("Por favor complete todos los datos.");
@@ -269,5 +239,6 @@ function soloNumerosprecio(e){
     if(letras.indexOf(tecla)==-1 && !tecla_especial){
 	    return false;
 	}
+	
 }
 </script>
