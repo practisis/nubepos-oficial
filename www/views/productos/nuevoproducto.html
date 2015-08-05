@@ -98,6 +98,36 @@ function verbusquedacateg(){
 		});
 }
 
+function actualizaLogProd(tabla){
+	var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+	
+	db.transaction(function(tx){
+		tx.executeSql('SELECT COUNT(id) as cuantos FROM PRODUCTOS',[],function(tx,res){
+			var existen=res.rows.item(0).cuantos;
+			//alert(existen);
+			tx.executeSql('update logActualizar set final = ? where tabla = ? ',[existen , tabla],function(tx,res){
+				console.log("logActualizar :"+res);
+			});		
+		});
+	
+	},errorCB,successCB);
+	
+}
+function actualizaLogCate(tabla){
+	var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+	
+	db.transaction(function(tx){
+		tx.executeSql('SELECT COUNT(id) as cuantos FROM CATEGORIAS',[],function(tx,res){
+			var existen=res.rows.item(0).cuantos;
+			//alert(existen);
+			tx.executeSql('update logActualizar set final = ? where tabla = ? ',[existen , tabla],function(tx,res){
+				console.log("logActualizar :"+res);
+			});		
+		});
+	
+	},errorCB,successCB);
+	
+}
 function GuardaProducto(){
 	if($('#idproducto').val()==''||$('#idproducto').val()==0){
 		var nombrep=$('#nombreproducto').val();
@@ -121,25 +151,37 @@ function GuardaProducto(){
 			if(idcategoria==0){
 				db.transaction(function(tx){
 				tx.executeSql('INSERT INTO CATEGORIAS(categoria,activo,existe) SELECT "'+categoria+'",1,0 WHERE NOT EXISTS(SELECT 1 FROM CATEGORIAS WHERE categoria = "'+categoria+'");',[],function(tx,results){
+					actualizaLogCate('CATEGORIAS');
 					$('#idcategoria').val(results.insertId);
 					console.log("categ:"+results.insertId);
 					idcategoria=$('#idcategoria').val();
+					var tabla = 'PRODUCTOS';
 					db.transaction(function(tx){
+					
 					tx.executeSql('INSERT INTO PRODUCTOS(id,formulado,codigo,precio,categoriaid,cargaiva,productofinal,materiaprima) SELECT 0,"'+nombrep+'","'+codigop+'","'+preciop+'",'+idcategoria+','+iva+','+prfinal+','+matprima+' WHERE NOT EXISTS(SELECT 1 FROM PRODUCTOS WHERE formulado like "'+nombrep+'" or codigo like "'+codigop+'");',[],function(tx,results){
 					console.log("prod:"+results.insertId);
 					envia("nuevoproducto");
+					actualizaLogProd("PRODUCTOS");
 					});
 					},errorCB,successCB);
 					});
 				},errorCB,successCB);
+				
+			//actualizaLogProd(tabla);
+			
+			
 			}else{
 				idcategoria=$('#idcategoria').val();
+				//var tabla = 'PRODUCTOS';
 				db.transaction(function(tx){
 				tx.executeSql('INSERT INTO PRODUCTOS(id,formulado,codigo,precio,categoriaid,cargaiva,productofinal,materiaprima) SELECT 0,"'+nombrep+'","'+codigop+'","'+preciop+'",'+idcategoria+','+iva+','+prfinal+','+matprima+' WHERE NOT EXISTS(SELECT 1 FROM PRODUCTOS WHERE formulado like "'+nombrep+'" or codigo like "'+codigop+'");',[],function(tx,results){
 				console.log("prod:"+results.insertId);
 				envia("nuevoproducto");
+				actualizaLogProd("PRODUCTOS");
 				});
 				},errorCB,successCB);
+				
+			
 			}
 		}else{
 			$('#jsalert').html("Por favor complete todos los datos.");

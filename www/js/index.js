@@ -19,6 +19,61 @@
 			if(existen==0)
 				db.transaction(Ingresaproductos,errorCB,successCB);
 		});
+		
+		
+		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+		//tx.executeSql('DROP TABLE IF EXISTS PRODUCTOS');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS empresa (id integer primary key AUTOINCREMENT, nombre integer )');
+		
+		var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+		//tx.executeSql('DROP TABLE IF EXISTS PRODUCTOS');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS logActualizar (id integer primary key AUTOINCREMENT, tabla text , incicial integer , final integer)');
+		tx.executeSql('select count(id) as cuantos from logActualizar',[],function(tx,res){
+		var existenD=res.rows.item(0).cuantos;
+			if(existenD==0){
+				for(var i = 1 ; i <= 5 ; i++){
+					var tabla ='';
+					if(i == 1){
+						tabla ='CAJA_APERTURA_CIERRE';
+					}
+					if(i == 2){
+						tabla ='CATEGORIAS';
+					}
+					if(i == 3){
+						tabla ='CLIENTES';
+					}
+					if(i == 4){
+						tabla ='FACTURAS';
+					}
+					if(i == 5){
+						tabla ='PRODUCTOS';
+					}
+					
+					insertaTablas(tabla);
+				}
+			}
+		});	
+		
+		
+		
+		function insertaTablas(tabla){
+			console.log(tabla);
+			var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
+			var inicia =0;
+			tx.executeSql('INSERT INTO logActualizar (tabla , incicial ,final) VALUES (?,? ,? );',[tabla , inicia , inicia],function(tx,res){
+				console.log("logActualizar :"+res.insertId);
+			});	
+			
+		}
+		// tx.executeSql('SELECT COUNT(id_local) as cuantos FROM PRODUCTOS',[],function(tx,res){
+			// var existen=res.rows.item(0).cuantos;
+			// if(existen==0)
+				// db.transaction(Ingresaproductos,errorCB,successCB);
+		// });
+		
+		
+		
+		
 		//tx.executeSql('DROP TABLE IF EXISTS CATEGORIAS');
         tx.executeSql('CREATE TABLE IF NOT EXISTS CATEGORIAS (id integer primary key AUTOINCREMENT, categoria text, activo integer, existe integer)');
 		tx.executeSql('SELECT COUNT(id) as cuantos FROM CATEGORIAS',[],function(tx,res){

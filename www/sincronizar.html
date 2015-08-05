@@ -41,6 +41,7 @@
 				<td>
 					<div>
 						<i class="fa fa-cloud-upload fa-5x" onclick='subeDatos()' id='sube1'></i>
+						<span> empresa a sincronizar :</span><span id='empSinc'></span>
 						<i class="fa fa-cloud-upload fa-5x" id='sube2' style='display:none;'></i>
 					</div>
 				</td>
@@ -106,7 +107,7 @@ getSearch();
 function ListarProductos(){
 	var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
 	db.transaction(function(tx){
-	tx.executeSql('SELECT * FROM PRODUCTOS ORDER BY formulado ASC LIMIT ;',[],function(tx,results){
+	tx.executeSql('SELECT p.*,c.categoria as nombrec FROM PRODUCTOS p,CATEGORIAS c WHERE p.categoriaid=c.id ORDER BY p.formulado ASC LIMIT 0,15;',[],function(tx,results){
 		//console.log(results.rows.length);
 		var inhtml='';
 		for (var i=0; i < results.rows.length; i++){
@@ -163,7 +164,7 @@ function getSearch(){
 
 	var db = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
 	db.transaction(function(tx){
-		tx.executeSql('SELECT * FROM PRODUCTOS ORDER BY formulado asc',[],function(tx,result){
+		tx.executeSql('SELECT p.*,c.categoria as nombrec FROM PRODUCTOS p,CATEGORIAS c WHERE '+queryextra+' and p.categoriaid=c.id ORDER BY p.formulado asc',[],function(tx,result){
 			$('#paginacion').html('');
 			var npags=Math.ceil(result.rows.length/15);
 			$('#totalpags').val(npags);
@@ -180,7 +181,7 @@ function getSearch(){
 	
 	
 	db.transaction(function(tx){
-	tx.executeSql('SELECT * FROM PRODUCTOS ORDER BY formulado ASC ',[],function(tx,results){
+	tx.executeSql('SELECT p.*,c.categoria as nombrec FROM PRODUCTOS p,CATEGORIAS c WHERE '+queryextra+' and p.categoriaid=c.id ORDER BY p.formulado desc LIMIT '+desde+',15;',[],function(tx,results){
 		//console.log(results);
 		var inhtml='';
 		for (var i=0; i < results.rows.length; i++){
@@ -234,9 +235,18 @@ $(document).keyup(function(event){
 		getSearch();
 		}
 });
-function subeDatos(){
+
+	$(document).ready(function(){
+		localStorage.setItem("empresa", id_emp);
+		var empresa = localStorage.getItem('empresa');
+		alert(empresa);
+		$('#empSinc').html(empresa);
+	});
+
+
+	function subeDatos(){
 		var db2 = window.openDatabase("Database", "1.0", "PractisisMobile", 200000);
-		var miqueryFac='SELECT P.* , C.categoria  FROM PRODUCTOS  P , CATEGORIAS  C where  C.id = P.categoriaid ORDER BY P.formulado asc';
+		var miqueryFac='SELECT p.*,c.categoria as nombrec , c.id as idcat FROM PRODUCTOS p,CATEGORIAS c WHERE p.categoriaid=c.id ORDER BY p.formulado ASC';
 		//alert(miqueryFac);
 		var empresa = localStorage.getItem('empresa');
 		console.log(empresa)
@@ -249,12 +259,14 @@ function subeDatos(){
 				var formulado = row.formulado;
 				var codigo = row.codigo;
 				var precio = row.precio;
-				var categoriaid = row.categoria;
+				var categoriaid = row.idcat;
+				var categorianombre = row.nombrec;
 				var cargaiva = row.cargaiva;
 				var productofinal = row.productofinal;
 				var materiaprima = row.materiaprima;
+				//alert(formulado +'@'+ categoriaid +'@'+ empresa);
 				$.post('http://practisis.net/practipos2/ajax/apiSincronizador/apiSincronizaNubeposProductos.php',{
-					empresa : empresa , formulado : formulado , codigo : codigo , precio : precio , categoriaid : categoriaid , cargaiva : cargaiva , productofinal : productofinal , materiaprima : materiaprima
+					empresa : empresa , formulado : formulado , codigo : codigo , precio : precio , categorianombre : categorianombre , cargaiva : cargaiva , productofinal : productofinal , materiaprima : materiaprima
 				}).done(function(data){
 					alert(data);
 				});
